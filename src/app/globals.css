@@ -1,26 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #f0f0f0;
+
+  /* ZNSO Image Assets */
+  --znso-hero-facade: url('https://i.ibb.co/6078Nj8f/5.jpg');
+  --znso-hero-interior: url('https://i.ibb.co/4nWF1fxd/1.jpg');
+  --znso-project-maison: url('https://i.ibb.co/0pVwWwcG/4.jpg');
+  --znso-project-atrium: url('https://i.ibb.co/4w08fMdq/4.jpg');
+  --znso-consultation: url('https://i.ibb.co/dsT9rLFz/7.jpg');
+  --znso-management: url('https://i.ibb.co/Txvb1McM/Facade-3-2.jpg');
+  --znso-new-image-1: url('https://i.ibb.co/HLLwjMns/21.jpg');
+  --znso-new-image-2: url('https://i.ibb.co/DDTBq9XT/2.jpg');
+  --znso-new-image-3: url('https://i.ibb.co/pvX6DG4y/Reception-5.jpg');
+  --znso-new-image-4: url('https://i.ibb.co/WvQKgKMg/Prayer-Room.jpg');
+  --znso-new-image-5: url('https://i.ibb.co/CKRsCZK0/Hallway-5.jpg');
+  --znso-new-image-6: url('https://i.ibb.co/HL00Pf9k/Bedroom-04-Dressing-4.jpg');
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
 }
