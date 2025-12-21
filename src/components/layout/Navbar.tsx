@@ -27,15 +27,9 @@ export function Navbar() {
             >
                 <div className="mx-auto px-6 lg:px-12 py-5">
                     <div className="flex items-center justify-between">
-                        {/* Logo */}
+                        {/* Logo - Text only */}
                         <Link href="/" className="relative z-50">
-                            <motion.img
-                                src="https://i.ibb.co/C5nZ9JF8/Untitled-design-8.png"
-                                alt="ZNSO Architects"
-                                className="h-6 md:h-7 object-contain brightness-0 invert"
-                                whileHover={{ opacity: 0.8 }}
-                                transition={{ duration: 0.2 }}
-                            />
+                            <span className="text-lg font-light tracking-[0.3em] text-white">ZNSO</span>
                         </Link>
 
                         {/* Desktop Navigation */}
