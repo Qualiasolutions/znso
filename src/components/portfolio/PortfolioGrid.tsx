@@ -7,7 +7,6 @@ import { projects, type Project } from '@/lib/projects';
 import { cn } from '@/lib/utils';
 
 const filters = [
-    { id: 'all', label: 'All Projects' },
     { id: 'residential', label: 'Architectural' },
     { id: 'interior', label: 'Interior' },
 ];
@@ -17,12 +16,10 @@ interface PortfolioGridProps {
 }
 
 export function PortfolioGrid({ onOpenProject }: PortfolioGridProps) {
-    const [activeFilter, setActiveFilter] = useState('all');
+    const [activeFilter, setActiveFilter] = useState('residential');
     const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-    const filteredProjects = activeFilter === 'all'
-        ? projects
-        : projects.filter(p => p.category === activeFilter);
+    const filteredProjects = projects.filter(p => p.category === activeFilter);
 
     return (
         <section className="py-20 container mx-auto px-6">
