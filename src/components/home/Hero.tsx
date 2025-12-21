@@ -10,39 +10,66 @@ interface HeroProps {
     onOpenModal?: (modalId: string) => void;
 }
 
-const heroImages = [
-    '/projects/facade-1/1.jpg',
-    '/projects/dana/1.jpg',
-    '/projects/poolside/1.jpg',
-    '/projects/facade-3/Facade-2_1.jpg',
-    '/projects/facade-4/Facade-3_1.jpg',
-];
-
-const showcaseImages = [
-    { src: '/projects/facade-1/1.jpg', label: 'Maison Blanche' },
-    { src: '/projects/dana/3.jpg', label: 'Dana Residence' },
-    { src: '/projects/poolside/2.jpg', label: 'Poolside Villa' },
-    { src: '/projects/osama/Living_1.jpg', label: 'Osama Residence' },
+// Curated image sets - each set contains: background, main showcase, accent1, accent2
+const imageSets = [
+    {
+        background: '/projects/facade-1/1.jpg',
+        main: { src: '/projects/facade-1/2.jpg', label: 'Maison Blanche' },
+        accent1: '/projects/facade-1/3.jpg',
+        accent2: '/projects/facade-1/4.jpg',
+    },
+    {
+        background: '/projects/dana/1.jpg',
+        main: { src: '/projects/dana/3.jpg', label: 'Dana Residence' },
+        accent1: '/projects/dana/2.jpg',
+        accent2: '/projects/dana/4.jpg',
+    },
+    {
+        background: '/projects/poolside/1.jpg',
+        main: { src: '/projects/poolside/2.jpg', label: 'Poolside Villa' },
+        accent1: '/projects/poolside/3.jpg',
+        accent2: '/projects/poolside/4.jpg',
+    },
+    {
+        background: '/projects/osama/Living_1.jpg',
+        main: { src: '/projects/osama/Living_2.jpg', label: 'Osama Residence' },
+        accent1: '/projects/osama/Dining_1.jpg',
+        accent2: '/projects/osama/Bedroom_1.jpg',
+    },
+    {
+        background: '/projects/facade-3/Facade-2_1.jpg',
+        main: { src: '/projects/facade-3/Facade-2_2.jpg', label: 'Contemporary Villa' },
+        accent1: '/projects/facade-3/Facade-2_3.jpg',
+        accent2: '/projects/facade-3/Facade-2_4.jpg',
+    },
+    {
+        background: '/projects/hassan-at/Living_1.jpg',
+        main: { src: '/projects/hassan-at/Dining_1.jpg', label: 'Hassan Residence' },
+        accent1: '/projects/hassan-at/Master_1.jpg',
+        accent2: '/projects/hassan-at/Living_2.jpg',
+    },
 ];
 
 export function Hero({ onOpenModal }: HeroProps) {
-    const [currentBg, setCurrentBg] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         setIsLoaded(true);
         const interval = setInterval(() => {
-            setCurrentBg(prev => (prev + 1) % heroImages.length);
+            setCurrentIndex(prev => (prev + 1) % imageSets.length);
         }, 6000);
         return () => clearInterval(interval);
     }, []);
+
+    const currentSet = imageSets[currentIndex];
 
     return (
         <section className="relative h-screen flex items-center overflow-hidden">
             {/* Animated Background */}
             <AnimatePresence mode="wait">
                 <motion.div
-                    key={currentBg}
+                    key={currentIndex}
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
@@ -50,7 +77,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                     className="absolute inset-0 z-0"
                 >
                     <Image
-                        src={heroImages[currentBg]}
+                        src={currentSet.background}
                         alt="ZNSO Architecture"
                         fill
                         className="object-cover"
@@ -161,13 +188,13 @@ export function Hero({ onOpenModal }: HeroProps) {
                         transition={{ delay: 1.5 }}
                         className="flex gap-2 mt-4"
                     >
-                        {heroImages.map((_, i) => (
+                        {imageSets.map((_, i) => (
                             <button
                                 key={i}
-                                onClick={() => setCurrentBg(i)}
+                                onClick={() => setCurrentIndex(i)}
                                 className="relative h-1 w-12 rounded-full bg-white/20 overflow-hidden"
                             >
-                                {currentBg === i && (
+                                {currentIndex === i && (
                                     <motion.div
                                         initial={{ scaleX: 0 }}
                                         animate={{ scaleX: 1 }}
@@ -196,7 +223,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                         >
                             <AnimatePresence mode="wait">
                                 <motion.div
-                                    key={currentBg}
+                                    key={currentIndex}
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -204,8 +231,8 @@ export function Hero({ onOpenModal }: HeroProps) {
                                     className="absolute inset-0"
                                 >
                                     <Image
-                                        src={showcaseImages[currentBg % showcaseImages.length].src}
-                                        alt={showcaseImages[currentBg % showcaseImages.length].label}
+                                        src={currentSet.main.src}
+                                        alt={currentSet.main.label}
                                         fill
                                         className="object-cover"
                                     />
@@ -215,48 +242,64 @@ export function Hero({ onOpenModal }: HeroProps) {
 
                             {/* Label */}
                             <div className="absolute bottom-6 left-6 right-6">
-                                <motion.div
-                                    key={currentBg}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
-                                >
-                                    <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 block mb-2">Featured Project</span>
-                                    <span className="text-xl font-light">{showcaseImages[currentBg % showcaseImages.length].label}</span>
-                                </motion.div>
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={currentIndex}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.5, delay: 0.2 }}
+                                    >
+                                        <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 block mb-2">Featured Project</span>
+                                        <span className="text-xl font-light">{currentSet.main.label}</span>
+                                    </motion.div>
+                                </AnimatePresence>
                             </div>
                         </motion.div>
 
-                        {/* Floating Accent Cards */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1.2 }}
-                            className="absolute -right-6 top-1/4 w-20 h-20 rounded-xl overflow-hidden border border-white/20 shadow-xl"
-                        >
-                            <Image
-                                src="/projects/osama/Living_2.jpg"
-                                alt="Interior Design"
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute inset-0 bg-black/30" />
-                        </motion.div>
+                        {/* Floating Accent Card 1 - Top Right */}
+                        <div className="absolute -right-6 top-1/4 w-20 h-20 rounded-xl overflow-hidden border border-white/20 shadow-xl">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={`accent1-${currentIndex}`}
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.6 }}
+                                    className="absolute inset-0"
+                                >
+                                    <Image
+                                        src={currentSet.accent1}
+                                        alt="Project detail"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-black/20" />
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.4 }}
-                            className="absolute -left-6 bottom-1/3 w-16 h-24 rounded-xl overflow-hidden border border-white/20 shadow-xl"
-                        >
-                            <Image
-                                src="/projects/facade-4/Facade-3_2.jpg"
-                                alt="Architecture"
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute inset-0 bg-black/30" />
-                        </motion.div>
+                        {/* Floating Accent Card 2 - Bottom Left */}
+                        <div className="absolute -left-6 bottom-1/3 w-16 h-24 rounded-xl overflow-hidden border border-white/20 shadow-xl">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={`accent2-${currentIndex}`}
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.6, delay: 0.1 }}
+                                    className="absolute inset-0"
+                                >
+                                    <Image
+                                        src={currentSet.accent2}
+                                        alt="Project detail"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-black/20" />
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
 
                         {/* Stats Card */}
                         <motion.div
