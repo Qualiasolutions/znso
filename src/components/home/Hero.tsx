@@ -38,7 +38,7 @@ export function Hero({ onOpenModal }: HeroProps) {
     }, []);
 
     return (
-        <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+        <section className="relative h-screen flex items-center overflow-hidden">
             {/* Animated Background */}
             <AnimatePresence mode="wait">
                 <motion.div
@@ -81,9 +81,9 @@ export function Hero({ onOpenModal }: HeroProps) {
                 <div className="absolute bottom-[20%] right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-tl from-amber-500/5 to-transparent" />
             </motion.div>
 
-            <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
+            <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
                 {/* Text Content */}
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-6">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -163,7 +163,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.5 }}
-                        className="flex gap-2 mt-8"
+                        className="flex gap-2 mt-4"
                     >
                         {heroImages.map((_, i) => (
                             <button
@@ -189,12 +189,12 @@ export function Hero({ onOpenModal }: HeroProps) {
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: isLoaded ? 1 : 0, x: isLoaded ? 0 : 50 }}
                     transition={{ duration: 1, delay: 0.6 }}
-                    className="relative hidden lg:block"
+                    className="relative hidden lg:block max-h-[70vh]"
                 >
                     {/* Main Featured Image */}
                     <div className="relative">
                         <motion.div
-                            className="relative rounded-[32px] overflow-hidden aspect-[4/5] shadow-2xl border border-white/10"
+                            className="relative rounded-[24px] overflow-hidden aspect-[3/4] shadow-2xl border border-white/10"
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.5 }}
                         >
@@ -236,7 +236,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 1.2 }}
-                            className="absolute -right-8 top-1/4 w-32 h-32 rounded-2xl overflow-hidden border border-white/20 shadow-xl"
+                            className="absolute -right-4 top-1/4 w-24 h-24 rounded-xl overflow-hidden border border-white/20 shadow-xl"
                         >
                             <Image
                                 src="/projects/osama/Living_2.jpg"
@@ -251,7 +251,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1.4 }}
-                            className="absolute -left-6 bottom-1/4 w-28 h-36 rounded-2xl overflow-hidden border border-white/20 shadow-xl"
+                            className="absolute -left-4 bottom-1/4 w-20 h-28 rounded-xl overflow-hidden border border-white/20 shadow-xl"
                         >
                             <Image
                                 src="/projects/facade-4/Facade-3_2.jpg"
