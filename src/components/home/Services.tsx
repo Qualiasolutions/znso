@@ -12,7 +12,6 @@ const services = [
         description: 'We begin by studying the site through real data and in-depth client consultations, then develop your project through concept creation, zoning, Baladiya approvals, structural design, and a fully crafted facade.',
         image: '/projects/facade-3/Facade-2_1.jpg',
         modalId: 'architecture',
-        stats: { label: 'Projects', value: '8+' }
     },
     {
         id: 'interior',
@@ -20,7 +19,6 @@ const services = [
         description: 'Starting from your approved floor plan, we shape your interiors through lifestyle-focused meetings, space planning, mood direction, material specifications, and 3D visualization.',
         image: '/projects/hassan-at/Dining_1.jpg',
         modalId: 'interior',
-        stats: { label: 'Spaces', value: '50+' }
     },
     {
         id: 'management',
@@ -28,7 +26,6 @@ const services = [
         description: 'We oversee grey structure and finishes through method statements, execution planning, site visits, and technical coordination — ensuring your project is delivered accurately.',
         image: '/projects/facade-4/Facade-3_1.jpg',
         modalId: 'management',
-        stats: { label: 'Delivered', value: '100%' }
     },
     {
         id: 'consultation',
@@ -36,7 +33,6 @@ const services = [
         description: 'Expert guidance to refine your vision, optimize space, and select the perfect materials for your unique project requirements.',
         image: '/projects/ali-bl/Living_1.jpg',
         modalId: 'consultation',
-        stats: { label: 'Sessions', value: '200+' }
     }
 ];
 
@@ -117,18 +113,13 @@ export function Services({ onOpenModal }: ServicesProps) {
                             {/* Content */}
                             <div className="relative z-10 h-full p-10 flex flex-col justify-between">
                                 {/* Top */}
-                                <div className="flex justify-between items-start">
+                                <div className="flex justify-end items-start">
                                     <motion.div
                                         initial={false}
                                         className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-y-2 group-hover:translate-y-0"
                                     >
                                         <ArrowUpRight className="w-5 h-5" />
                                     </motion.div>
-
-                                    <div className="text-right">
-                                        <span className="block text-2xl font-light">{service.stats.value}</span>
-                                        <span className="text-[10px] uppercase tracking-widest text-white/40">{service.stats.label}</span>
-                                    </div>
                                 </div>
 
                                 {/* Bottom */}

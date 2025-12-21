@@ -5,7 +5,6 @@ import { Hero } from '@/components/home/Hero';
 import { Services } from '@/components/home/Services';
 import { FeaturedProjects } from '@/components/home/FeaturedProjects';
 import { CaseStudy } from '@/components/home/CaseStudy';
-import { Clients } from '@/components/home/Clients';
 import { Contact } from '@/components/home/Contact';
 import { Modal } from '@/components/ui/Modal';
 import { FadeIn } from '@/components/ui/FadeIn';
@@ -119,14 +118,6 @@ export function HomeClient() {
             </FadeIn>
 
             <div className="bg-black">
-                <SectionDivider variant="dark" />
-            </div>
-
-            <FadeIn direction="up" delay={0.1}>
-                <Clients />
-            </FadeIn>
-
-            <div className="bg-[#030303]">
                 <SectionDivider variant="dark" />
             </div>
 
