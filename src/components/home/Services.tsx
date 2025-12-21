@@ -89,24 +89,6 @@ export function Services({ onOpenModal }: ServicesProps) {
                             A comprehensive suite of architectural and design services, tailored to bring your unique vision to life.
                         </motion.p>
                     </div>
-
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                        className="flex gap-8"
-                    >
-                        <div className="text-right">
-                            <span className="block text-4xl font-light text-[#0a0a0a]">15+</span>
-                            <span className="text-[10px] uppercase tracking-widest text-[#0a0a0a]/40">Years Experience</span>
-                        </div>
-                        <div className="w-px bg-[#0a0a0a]/10" />
-                        <div className="text-right">
-                            <span className="block text-4xl font-light text-[#0a0a0a]">100%</span>
-                            <span className="text-[10px] uppercase tracking-widest text-[#0a0a0a]/40">Client Satisfaction</span>
-                        </div>
-                    </motion.div>
                 </div>
 
                 {/* Services Grid */}
