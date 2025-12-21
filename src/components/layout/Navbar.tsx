@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -27,9 +28,16 @@ export function Navbar() {
             >
                 <div className="mx-auto px-6 lg:px-12 py-5">
                     <div className="flex items-center justify-between">
-                        {/* Logo - Text only */}
+                        {/* Logo */}
                         <Link href="/" className="relative z-50">
-                            <span className="text-lg font-light tracking-[0.3em] text-white">ZNSO</span>
+                            <Image
+                                src="/main.png"
+                                alt="ZNSO"
+                                width={32}
+                                height={32}
+                                className="h-6 w-auto"
+                                priority
+                            />
                         </Link>
 
                         {/* Desktop Navigation */}
