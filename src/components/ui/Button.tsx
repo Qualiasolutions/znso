@@ -22,7 +22,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                             variant === 'outline',
                         'hover:bg-white/10 text-white': variant === 'ghost',
                         'h-10 px-4 py-2': size === 'default',
-                        'h-9 rounded-md px-3': size === 'sm',
+                        'h-9 px-4': size === 'sm',
                         'h-14 px-10 py-4': size === 'lg',
                         'h-10 w-10': size === 'icon',
                     },

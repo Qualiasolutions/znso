@@ -315,7 +315,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                                 </div>
                                 <div className="w-px bg-white/10" />
                                 <div>
-                                    <span className="block text-2xl font-light">2024</span>
+                                    <span className="block text-2xl font-light">2025</span>
                                     <span className="text-[9px] uppercase tracking-widest text-white/40">Latest</span>
                                 </div>
                             </div>
