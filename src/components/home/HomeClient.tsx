@@ -9,6 +9,7 @@ import { Clients } from '@/components/home/Clients';
 import { Contact } from '@/components/home/Contact';
 import { Modal } from '@/components/ui/Modal';
 import { FadeIn } from '@/components/ui/FadeIn';
+import { SectionDivider } from '@/components/ui/SectionDivider';
 
 const modalContent: Record<string, { title: string; content: React.ReactNode }> = {
     maison: {
@@ -79,17 +80,33 @@ export function HomeClient() {
                 <Services onOpenModal={handleOpenModal} />
             </FadeIn>
 
+            <div className="bg-[#fafafa]">
+                <SectionDivider variant="light" />
+            </div>
+
             <FadeIn direction="up" delay={0.05}>
                 <FeaturedProjects />
             </FadeIn>
+
+            <div className="bg-[#030303]">
+                <SectionDivider variant="dark" />
+            </div>
 
             <FadeIn direction="up" blur>
                 <CaseStudy />
             </FadeIn>
 
+            <div className="bg-black">
+                <SectionDivider variant="dark" />
+            </div>
+
             <FadeIn direction="up" delay={0.1}>
                 <Clients />
             </FadeIn>
+
+            <div className="bg-[#030303]">
+                <SectionDivider variant="dark" />
+            </div>
 
             <FadeIn direction="up">
                 <Contact />

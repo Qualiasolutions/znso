@@ -103,7 +103,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             transition={{ duration: 0.8, delay: 0.3 }}
                             className="block"
                         >
-                            Sculpting
+                            Where Vision
                         </motion.span>
                         <motion.span
                             initial={{ opacity: 0, y: 40 }}
@@ -111,7 +111,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             transition={{ duration: 0.8, delay: 0.5 }}
                             className="block text-white/90"
                         >
-                            Timeless
+                            Becomes
                         </motion.span>
                         <motion.span
                             initial={{ opacity: 0, y: 40 }}
@@ -120,7 +120,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             className="block relative"
                         >
                             <span className="relative">
-                                Spaces
+                                Structure
                                 <motion.span
                                     initial={{ scaleX: 0 }}
                                     animate={{ scaleX: 1 }}
@@ -149,12 +149,8 @@ export function Hero({ onOpenModal }: HeroProps) {
                         <Button asChild size="lg">
                             <Link href="/portfolio">Explore Projects</Link>
                         </Button>
-                        <Button
-                            variant="outline"
-                            size="lg"
-                            onClick={() => onOpenModal?.('maison')}
-                        >
-                            Featured Work
+                        <Button asChild variant="outline" size="lg">
+                            <Link href="/contact">Start a Conversation</Link>
                         </Button>
                     </motion.div>
 
@@ -189,12 +185,12 @@ export function Hero({ onOpenModal }: HeroProps) {
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: isLoaded ? 1 : 0, x: isLoaded ? 0 : 50 }}
                     transition={{ duration: 1, delay: 0.6 }}
-                    className="relative hidden lg:block max-h-[70vh]"
+                    className="relative hidden lg:block"
                 >
                     {/* Main Featured Image */}
-                    <div className="relative">
+                    <div className="relative max-w-md mx-auto">
                         <motion.div
-                            className="relative rounded-[24px] overflow-hidden aspect-[3/4] shadow-2xl border border-white/10"
+                            className="relative rounded-[24px] overflow-hidden aspect-[4/5] shadow-2xl border border-white/10"
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.5 }}
                         >
@@ -218,7 +214,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             </AnimatePresence>
 
                             {/* Label */}
-                            <div className="absolute bottom-8 left-8 right-8">
+                            <div className="absolute bottom-6 left-6 right-6">
                                 <motion.div
                                     key={currentBg}
                                     initial={{ opacity: 0, y: 20 }}
@@ -226,7 +222,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                                     transition={{ delay: 0.3 }}
                                 >
                                     <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 block mb-2">Featured Project</span>
-                                    <span className="text-2xl font-light">{showcaseImages[currentBg % showcaseImages.length].label}</span>
+                                    <span className="text-xl font-light">{showcaseImages[currentBg % showcaseImages.length].label}</span>
                                 </motion.div>
                             </div>
                         </motion.div>
@@ -236,7 +232,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 1.2 }}
-                            className="absolute -right-4 top-1/4 w-24 h-24 rounded-xl overflow-hidden border border-white/20 shadow-xl"
+                            className="absolute -right-6 top-1/4 w-20 h-20 rounded-xl overflow-hidden border border-white/20 shadow-xl"
                         >
                             <Image
                                 src="/projects/osama/Living_2.jpg"
@@ -251,7 +247,7 @@ export function Hero({ onOpenModal }: HeroProps) {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1.4 }}
-                            className="absolute -left-4 bottom-1/4 w-20 h-28 rounded-xl overflow-hidden border border-white/20 shadow-xl"
+                            className="absolute -left-6 bottom-1/3 w-16 h-24 rounded-xl overflow-hidden border border-white/20 shadow-xl"
                         >
                             <Image
                                 src="/projects/facade-4/Facade-3_2.jpg"
@@ -267,38 +263,23 @@ export function Hero({ onOpenModal }: HeroProps) {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 1.6 }}
-                            className="absolute -bottom-6 right-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6"
+                            className="absolute -bottom-4 right-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-4"
                         >
-                            <div className="flex gap-8">
+                            <div className="flex gap-6">
                                 <div>
-                                    <span className="block text-3xl font-light">15+</span>
-                                    <span className="text-[10px] uppercase tracking-widest text-white/40">Projects</span>
+                                    <span className="block text-2xl font-light">15+</span>
+                                    <span className="text-[9px] uppercase tracking-widest text-white/40">Projects</span>
                                 </div>
                                 <div className="w-px bg-white/10" />
                                 <div>
-                                    <span className="block text-3xl font-light">2024</span>
-                                    <span className="text-[10px] uppercase tracking-widest text-white/40">Latest</span>
+                                    <span className="block text-2xl font-light">2024</span>
+                                    <span className="text-[9px] uppercase tracking-widest text-white/40">Latest</span>
                                 </div>
                             </div>
                         </motion.div>
                     </div>
                 </motion.div>
             </div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-            >
-                <span className="text-[10px] uppercase tracking-[0.3em] text-white/30">Scroll</span>
-                <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"
-                />
-            </motion.div>
         </section>
     );
 }
