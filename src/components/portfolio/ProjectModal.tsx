@@ -82,8 +82,8 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         className="fixed inset-0 z-[85] overflow-y-auto"
                     >
-                        <div className="min-h-screen py-4 px-3 md:py-12 md:px-6">
-                            <div className="max-w-7xl mx-auto">
+                        <div className="min-h-screen py-4 px-3 md:py-8 md:px-6">
+                            <div className="max-w-[98vw] mx-auto">
                                 {/* Header - Compact on Mobile */}
                                 <div className="flex items-start justify-between mb-6 md:mb-10">
                                     <motion.div
@@ -158,37 +158,33 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
-                                    className="relative"
+                                    className="relative -mx-3 md:-mx-6"
                                 >
                                     {/* Left Arrow */}
                                     <button
                                         onClick={() => scrollTo('left')}
-                                        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-24 md:w-16 md:h-32 bg-gradient-to-r from-black/80 to-transparent flex items-center justify-start pl-2 transition-opacity duration-300 ${
+                                        className={`absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/60 hover:text-white transition-all duration-300 ${
                                             canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                         }`}
                                     >
-                                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors">
-                                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-                                        </div>
+                                        <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />
                                     </button>
 
                                     {/* Right Arrow */}
                                     <button
                                         onClick={() => scrollTo('right')}
-                                        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-24 md:w-16 md:h-32 bg-gradient-to-l from-black/80 to-transparent flex items-center justify-end pr-2 transition-opacity duration-300 ${
+                                        className={`absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/60 hover:text-white transition-all duration-300 ${
                                             canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                         }`}
                                     >
-                                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors">
-                                            <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-                                        </div>
+                                        <ChevronRight className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />
                                     </button>
 
                                     {/* Scrollable Gallery */}
                                     <div
                                         ref={scrollRef}
                                         onScroll={checkScroll}
-                                        className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
+                                        className="flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 px-3 md:px-6"
                                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                                     >
                                         {project.images.map((image, index) => (
@@ -197,15 +193,15 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                                 initial={{ opacity: 0, scale: 0.9 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{ delay: 0.1 + index * 0.03 }}
-                                                className="flex-shrink-0 snap-center first:pl-0 last:pr-0"
+                                                className="flex-shrink-0 snap-center"
                                             >
-                                                <div className="relative w-[280px] h-[200px] md:w-[500px] md:h-[350px] lg:w-[600px] lg:h-[420px] rounded-xl md:rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+                                                <div className="relative w-[85vw] h-[60vh] md:w-[90vw] md:h-[70vh] lg:w-[85vw] lg:h-[75vh] rounded-lg md:rounded-xl overflow-hidden border border-white/5 bg-white/5">
                                                     <Image
                                                         src={image}
                                                         alt={`${project.title} - Image ${index + 1}`}
                                                         fill
                                                         className="object-cover"
-                                                        sizes="(max-width: 768px) 280px, (max-width: 1024px) 500px, 600px"
+                                                        sizes="90vw"
                                                     />
                                                 </div>
                                             </motion.div>

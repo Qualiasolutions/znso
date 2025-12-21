@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { PortfolioHero } from '@/components/portfolio/PortfolioHero';
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
 import { ProjectModal } from '@/components/portfolio/ProjectModal';
+import { FadeIn } from '@/components/ui/FadeIn';
 import type { Project } from '@/lib/projects';
 
 export default function Portfolio() {
@@ -12,7 +13,9 @@ export default function Portfolio() {
     return (
         <>
             <PortfolioHero />
-            <PortfolioGrid onOpenProject={setSelectedProject} />
+            <FadeIn direction="up" blur>
+                <PortfolioGrid onOpenProject={setSelectedProject} />
+            </FadeIn>
             <ProjectModal
                 project={selectedProject}
                 onClose={() => setSelectedProject(null)}

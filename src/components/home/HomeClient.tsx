@@ -2,14 +2,13 @@
 
 import { useState } from 'react';
 import { Hero } from '@/components/home/Hero';
-import { Metrics } from '@/components/home/Metrics';
 import { Services } from '@/components/home/Services';
 import { FeaturedProjects } from '@/components/home/FeaturedProjects';
 import { CaseStudy } from '@/components/home/CaseStudy';
 import { Clients } from '@/components/home/Clients';
 import { Contact } from '@/components/home/Contact';
 import { Modal } from '@/components/ui/Modal';
-import { ParallaxSection } from '@/components/ui/ParallaxSection';
+import { FadeIn } from '@/components/ui/FadeIn';
 
 const modalContent: Record<string, { title: string; content: React.ReactNode }> = {
     maison: {
@@ -76,25 +75,25 @@ export function HomeClient() {
         <div className="flex flex-col gap-0 overflow-hidden">
             <Hero onOpenModal={handleOpenModal} />
 
-            <ParallaxSection velocity={30} className="z-10">
-                <Metrics />
-            </ParallaxSection>
-
-            <ParallaxSection velocity={-20} className="z-20">
+            <FadeIn direction="up" delay={0.1} blur>
                 <Services onOpenModal={handleOpenModal} />
-            </ParallaxSection>
+            </FadeIn>
 
-            <FeaturedProjects />
+            <FadeIn direction="up" delay={0.05}>
+                <FeaturedProjects />
+            </FadeIn>
 
-            <ParallaxSection velocity={40} className="z-10">
+            <FadeIn direction="up" blur>
                 <CaseStudy />
-            </ParallaxSection>
+            </FadeIn>
 
-            <ParallaxSection velocity={10} className="z-10 bg-[#030303]">
+            <FadeIn direction="up" delay={0.1}>
                 <Clients />
-            </ParallaxSection>
+            </FadeIn>
 
-            <Contact />
+            <FadeIn direction="up">
+                <Contact />
+            </FadeIn>
 
             <Modal
                 isOpen={!!activeModal}

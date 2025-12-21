@@ -2,43 +2,69 @@
 
 import { motion } from 'framer-motion';
 
+const easeOut: [number, number, number, number] = [0.25, 0.4, 0.25, 1];
+
+const textVariants = {
+    hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
+    visible: (delay: number) => ({
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        transition: {
+            duration: 0.8,
+            delay,
+            ease: easeOut,
+        },
+    }),
+};
+
 export function PortfolioHero() {
     return (
-        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-32 pb-20">
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20 pb-20">
             <div
                 className="absolute inset-0 z-0 bg-cover bg-center"
-                style={{ backgroundImage: 'url(https://i.ibb.co/HLLwjMns/21.jpg)' }} // Placeholder
+                style={{ backgroundImage: 'url(https://i.ibb.co/HLLwjMns/21.jpg)' }}
             >
                 <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <motion.span
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 0.7, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-xs font-medium uppercase tracking-[0.45em] block mb-6"
+                    variants={textVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={0}
+                    className="text-xs font-medium uppercase tracking-[0.45em] block mb-6 text-white/70"
                 >
                     Architectural Portfolio
                 </motion.span>
 
                 <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    variants={textVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={0.15}
                     className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-tight leading-tight mb-8"
                 >
                     Where Vision Meets Reality
                 </motion.h1>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 0.8, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
+                    variants={textVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={0.3}
                     className="text-lg font-light leading-relaxed max-w-2xl mx-auto text-white/80"
                 >
                     Explore our collection of transformative architectural projects that blend cultural heritage with contemporary innovation across the Middle East.
                 </motion.p>
+
+                <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1, delay: 0.5, ease: easeOut }}
+                    className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mt-12"
+                />
             </div>
         </section>
     );
