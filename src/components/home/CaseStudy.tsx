@@ -104,7 +104,7 @@ export function CaseStudy() {
                         <motion.div
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.4 }}
-                            className="relative aspect-[4/3] lg:aspect-[3/4] rounded-2xl overflow-hidden border border-white/10"
+                            className="relative aspect-[4/3] lg:aspect-[4/5] max-h-[65vh] rounded-2xl overflow-hidden border border-white/10"
                         >
                             <Image
                                 src="/projects/facade-1/5.jpg"
