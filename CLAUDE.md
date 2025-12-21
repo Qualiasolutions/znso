@@ -2,64 +2,64 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Build & Development Commands
+## Commands
 
 ```bash
-npm run dev      # Start development server (localhost:3000)
+npm run dev      # Start development server at localhost:3000
 npm run build    # Production build
-npm run start    # Start production server
 npm run lint     # Run ESLint
+npm start        # Start production server
 ```
-
-## Tech Stack
-
-- **Framework**: Next.js 16 with App Router and React Compiler enabled
-- **React**: 19.2 with React 19 features
-- **Styling**: Tailwind CSS v4 (uses `@import "tailwindcss"` syntax, `@theme inline` for config)
-- **Animations**: Framer Motion for scroll-based parallax and component animations
-- **UI**: Radix UI primitives, Lucide icons, custom glassmorphism components
 
 ## Architecture
 
+This is a Next.js 16 marketing website for ZNSO Architects, an architectural firm in Kuwait. Uses React 19 with the React Compiler enabled, Tailwind CSS v4, and Framer Motion for animations.
+
+### Project Structure
+
+- `src/app/` - Next.js App Router pages (home, about, services, portfolio, contact, case-studies)
+- `src/components/` - React components organized by page/feature
+  - `home/` - Homepage sections (Hero, Services, FeaturedProjects, etc.)
+  - `layout/` - Navbar, Footer
+  - `portfolio/` - PortfolioGrid, ProjectModal
+  - `ui/` - Reusable components (Modal, Button, ParallaxSection)
+  - `about/`, `services/`, `contact/` - Page-specific components
+- `src/lib/` - Utilities and data
+  - `projects.ts` - Project data with images and metadata
+  - `utils.ts` - `cn()` helper for Tailwind class merging
+
 ### Key Patterns
 
-**Client/Server Split**: Pages that need interactivity use a client wrapper pattern:
-- `page.tsx` (server component) renders `<SectionClient />` (client component)
-- Example: `app/page.tsx` → `components/home/HomeClient.tsx`
+- **Client Components**: Most interactive components use `'use client'` directive for Framer Motion animations
+- **HomeClient Pattern**: The homepage uses a client wrapper (`HomeClient.tsx`) to manage modal state while page.tsx remains a server component
+- **Project Data**: Projects are typed with the `Project` interface and stored in `src/lib/projects.ts`. Helper functions: `getFeaturedProjects()`, `getProjectsByCategory()`, `getProjectById()`
+- **Path Alias**: Use `@/` for imports from `src/` directory
 
-**Parallax Sections**: Use `ParallaxSection` wrapper with `velocity` prop for scroll effects:
-```tsx
-<ParallaxSection velocity={30} className="z-10 bg-[#fdfdfd]">
-  <ComponentContent />
-</ParallaxSection>
-```
+### Navbar (`src/components/layout/Navbar.tsx`)
 
-**Modal System**: `HomeClient` manages modal state via `activeModal` string ID, passes `onOpenModal` callbacks to child components. `Modal` uses React Portal (`createPortal`) to render outside the component tree.
+- Fixed position header with smooth fade-in animation
+- Text-only "ZNSO" logo (no image)
+- Desktop: Nav links with animated underline indicator using Framer Motion `layoutId`
+- Mobile: Animated hamburger icon (transforms to X), full-screen overlay menu with staggered link animations
+- Uses `AnimatePresence` for smooth mobile menu open/close transitions
 
-**Animation Pattern**: Components use `motion.div` with `whileInView` for scroll-triggered animations:
-```tsx
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-/>
-```
+### Hero Section (`src/components/home/Hero.tsx`)
 
-**Static Data**: Project data, modal content, and filter options are embedded directly in components (e.g., `PortfolioGrid.tsx` contains project array, `HomeClient.tsx` contains modal content).
+- Fits exactly within 100vh (`h-screen`) - no scrolling required to see full hero
+- Rotating background images with crossfade transitions
+- Left side: Text content with headline, tagline, and CTA buttons
+- Right side (desktop): Featured project showcase with floating accent cards
+- Progress indicators for background image rotation
 
-**Filter Pattern**: Used in `PortfolioGrid` - button-based filters with `activeFilter` state, `AnimatePresence` for smooth item transitions.
+## Deployment
 
-**Form Submission**: Contact form uses FormSubmit.co service (`action="https://formsubmit.co/..."`) with hidden fields for configuration (`_subject`, `_next`, `_captcha`, `_template`). Button selections stored in hidden inputs.
+- **Hosting**: Vercel (auto-deploys on push to main)
+- **Repository**: https://github.com/Qualiasolutions/znso.git
+- **Live URL**: https://znso-website.vercel.app
 
-### Styling Conventions
+### Styling
 
-- Dark theme with glassmorphism: `bg-white/5 backdrop-blur-md border border-white/10`
-- Rounded corners: `rounded-[28px]` or `rounded-[32px]` for cards
-- Typography: Uppercase tracking for labels (`text-xs uppercase tracking-[0.2em]`)
-- Image assets: CSS variables in `globals.css` (e.g., `--znso-hero-facade`)
-- Path alias: `@/*` maps to `./src/*`
-
-### Button Variants
-
-The `Button` component supports: `primary` (glassmorphism), `outline`, `ghost`
-- Uses `asChild` prop with Radix Slot for Link composition
+- Dark theme with black background (`bg-black`) and white text
+- Tailwind CSS v4 with `@tailwindcss/postcss`
+- Class merging via `cn()` utility (clsx + tailwind-merge)
+- Animations use Framer Motion with `motion` components and `AnimatePresence` for exit animations
