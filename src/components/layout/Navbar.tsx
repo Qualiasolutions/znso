@@ -21,7 +21,7 @@ export function Navbar() {
 
     return (
         <motion.header
-            className="absolute top-0 left-0 right-0 z-50 py-4 bg-transparent"
+            className="absolute top-0 left-0 right-0 z-50 py-3 bg-transparent"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
@@ -31,7 +31,7 @@ export function Navbar() {
                     <img
                         src="https://i.ibb.co/C5nZ9JF8/Untitled-design-8.png"
                         alt="ZNSO Architects"
-                        className="h-8 object-contain brightness-0 invert"
+                        className="h-5 object-contain brightness-0 invert"
                     />
                 </Link>
 
