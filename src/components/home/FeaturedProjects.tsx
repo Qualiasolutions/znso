@@ -6,9 +6,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
-import { getFeaturedProjects } from '@/lib/projects';
+import { getFeaturedProjects, type Project } from '@/lib/projects';
 
-export function FeaturedProjects() {
+interface FeaturedProjectsProps {
+    onSelectProject?: (project: Project) => void;
+}
+
+export function FeaturedProjects({ onSelectProject }: FeaturedProjectsProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -72,7 +76,8 @@ export function FeaturedProjects() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-100px' }}
                         transition={{ delay: index * 0.1 }}
-                        className="group flex-shrink-0 w-[400px] md:w-[500px]"
+                        className="group flex-shrink-0 w-[400px] md:w-[500px] cursor-pointer"
+                        onClick={() => onSelectProject?.(project)}
                     >
                         <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden border border-white/10 mb-6">
                             <Image
@@ -102,6 +107,11 @@ export function FeaturedProjects() {
                                 <span className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] uppercase tracking-[0.2em]">
                                     {project.category}
                                 </span>
+                            </div>
+
+                            {/* Click indicator */}
+                            <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <ArrowRight className="w-4 h-4" />
                             </div>
                         </div>
 

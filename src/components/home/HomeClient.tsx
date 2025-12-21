@@ -10,6 +10,9 @@ import { Contact } from '@/components/home/Contact';
 import { Modal } from '@/components/ui/Modal';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { SectionDivider } from '@/components/ui/SectionDivider';
+import { ProjectPreview } from '@/components/home/ProjectPreview';
+import { ProjectModal } from '@/components/portfolio/ProjectModal';
+import type { Project } from '@/lib/projects';
 
 const modalContent: Record<string, { title: string; content: React.ReactNode }> = {
     maison: {
@@ -61,6 +64,8 @@ const modalContent: Record<string, { title: string; content: React.ReactNode }> 
 
 export function HomeClient() {
     const [activeModal, setActiveModal] = useState<string | null>(null);
+    const [previewProject, setPreviewProject] = useState<Project | null>(null);
+    const [fullProject, setFullProject] = useState<Project | null>(null);
 
     const handleOpenModal = (modalId: string) => {
         setActiveModal(modalId);
@@ -68,6 +73,23 @@ export function HomeClient() {
 
     const handleCloseModal = () => {
         setActiveModal(null);
+    };
+
+    const handleSelectProject = (project: Project) => {
+        setPreviewProject(project);
+    };
+
+    const handleClosePreview = () => {
+        setPreviewProject(null);
+    };
+
+    const handleViewFullProject = (project: Project) => {
+        setPreviewProject(null);
+        setFullProject(project);
+    };
+
+    const handleCloseFullProject = () => {
+        setFullProject(null);
     };
 
     const currentModal = activeModal ? modalContent[activeModal] : null;
@@ -85,7 +107,7 @@ export function HomeClient() {
             </div>
 
             <FadeIn direction="up" delay={0.05}>
-                <FeaturedProjects />
+                <FeaturedProjects onSelectProject={handleSelectProject} />
             </FadeIn>
 
             <div className="bg-[#030303]">
@@ -112,6 +134,7 @@ export function HomeClient() {
                 <Contact />
             </FadeIn>
 
+            {/* Service Info Modal */}
             <Modal
                 isOpen={!!activeModal}
                 onClose={handleCloseModal}
@@ -119,6 +142,19 @@ export function HomeClient() {
             >
                 {currentModal?.content}
             </Modal>
+
+            {/* Project Preview Modal */}
+            <ProjectPreview
+                project={previewProject}
+                onClose={handleClosePreview}
+                onViewProject={handleViewFullProject}
+            />
+
+            {/* Full Project Modal */}
+            <ProjectModal
+                project={fullProject}
+                onClose={handleCloseFullProject}
+            />
         </div>
     );
 }
