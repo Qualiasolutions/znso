@@ -163,21 +163,21 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     {/* Left Arrow */}
                                     <button
                                         onClick={() => scrollTo('left')}
-                                        className={`absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-24 md:w-14 md:h-32 flex items-center justify-center bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-r-xl border border-white/10 border-l-0 text-white/70 hover:text-white transition-all duration-300 ${
+                                        className={`absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-all duration-300 ${
                                             canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                         }`}
                                     >
-                                        <ChevronLeft className="w-8 h-8 md:w-12 md:h-12" strokeWidth={1.5} />
+                                        <ChevronLeft className="w-10 h-14 md:w-14 md:h-20 border border-white/[0.08] rounded-lg p-1" strokeWidth={1} />
                                     </button>
 
                                     {/* Right Arrow */}
                                     <button
                                         onClick={() => scrollTo('right')}
-                                        className={`absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-24 md:w-14 md:h-32 flex items-center justify-center bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-l-xl border border-white/10 border-r-0 text-white/70 hover:text-white transition-all duration-300 ${
+                                        className={`absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-all duration-300 ${
                                             canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                         }`}
                                     >
-                                        <ChevronRight className="w-8 h-8 md:w-12 md:h-12" strokeWidth={1.5} />
+                                        <ChevronRight className="w-10 h-14 md:w-14 md:h-20 border border-white/[0.08] rounded-lg p-1" strokeWidth={1} />
                                     </button>
 
                                     {/* Scrollable Gallery */}
