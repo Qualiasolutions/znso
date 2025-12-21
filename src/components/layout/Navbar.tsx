@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navItems = [
@@ -17,23 +17,11 @@ const navItems = [
 
 export function Navbar() {
     const pathname = usePathname();
-    const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     return (
         <motion.header
-            className={cn(
-                'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-                isScrolled ? 'bg-black/80 backdrop-blur-md py-4 border-b border-white/10' : 'bg-transparent py-6'
-            )}
+            className="absolute top-0 left-0 right-0 z-50 py-4 bg-transparent"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
@@ -43,7 +31,7 @@ export function Navbar() {
                     <img
                         src="https://i.ibb.co/C5nZ9JF8/Untitled-design-8.png"
                         alt="ZNSO Architects"
-                        className="h-12 object-contain brightness-0 invert"
+                        className="h-8 object-contain brightness-0 invert"
                     />
                 </Link>
 
