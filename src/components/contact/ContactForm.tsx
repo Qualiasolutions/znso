@@ -1,9 +1,97 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
+import { Upload, FileText, X } from 'lucide-react';
+
+type Department = 'architectural' | 'interior' | null;
+type ProjectType = 'commercial' | 'residential' | null;
+type ResidentialStatus = 'existing' | 'new' | null;
+type ExistingType = 'demolishment' | 'refurbishment' | null;
+type HasTechnicalDesign = 'yes' | 'no' | null;
+
+const plotSizes = [
+    'Below 375m²',
+    '400m²',
+    '500m²',
+    '600m²',
+    '750m²',
+    '1000m²',
+];
 
 export function ContactForm() {
+    const [department, setDepartment] = useState<Department>(null);
+    const [projectType, setProjectType] = useState<ProjectType>(null);
+    const [residentialStatus, setResidentialStatus] = useState<ResidentialStatus>(null);
+    const [existingType, setExistingType] = useState<ExistingType>(null);
+    const [plotSize, setPlotSize] = useState<string>('');
+    const [hasTechnicalDesign, setHasTechnicalDesign] = useState<HasTechnicalDesign>(null);
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
+    const resetForm = () => {
+        setProjectType(null);
+        setResidentialStatus(null);
+        setExistingType(null);
+        setPlotSize('');
+        setHasTechnicalDesign(null);
+        setUploadedFile(null);
+    };
+
+    const handleDepartmentChange = (dept: Department) => {
+        setDepartment(dept);
+        resetForm();
+    };
+
+    const handleProjectTypeChange = (type: ProjectType) => {
+        setProjectType(type);
+        setResidentialStatus(null);
+        setExistingType(null);
+        setHasTechnicalDesign(null);
+        setUploadedFile(null);
+    };
+
+    const handleResidentialStatusChange = (status: ResidentialStatus) => {
+        setResidentialStatus(status);
+        setExistingType(null);
+        setHasTechnicalDesign(null);
+        setUploadedFile(null);
+    };
+
+    const handleTechnicalDesignChange = (value: HasTechnicalDesign) => {
+        setHasTechnicalDesign(value);
+        setUploadedFile(null);
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file && file.type === 'application/pdf') {
+            setUploadedFile(file);
+        }
+    };
+
+    const removeFile = () => {
+        setUploadedFile(null);
+    };
+
+    // Generate email subject based on selections
+    const getEmailSubject = () => {
+        if (department === 'architectural') {
+            return `ZNSO Inquiry - Architectural: ${projectType || 'General'}`;
+        }
+        return `ZNSO Inquiry - Interior Design: ${projectType || 'General'}`;
+    };
+
+    // Check if form is ready to submit for Interior Design
+    const isInteriorFormComplete = () => {
+        if (!projectType) return false;
+        if (projectType === 'residential' && !residentialStatus) return false;
+        if (!hasTechnicalDesign) return false;
+        if (hasTechnicalDesign === 'yes' && !uploadedFile) return false;
+        return true;
+    };
+
     return (
         <section className="py-20 container mx-auto px-6">
             <div className="grid lg:grid-cols-5 gap-12 items-start">
@@ -17,76 +105,473 @@ export function ContactForm() {
                 >
                     <div className="mb-10">
                         <h2 className="text-3xl font-light mb-4">Request a Consultation</h2>
-                        <p className="text-white/60 font-light">Tell us about your project and we'll connect you with the right architectural expertise.</p>
+                        <p className="text-white/60 font-light">Select your department and tell us about your project.</p>
                     </div>
 
-                    <form className="space-y-6">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-widest text-white/60">First Name</label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
-                                />
+                    <form
+                        action="https://formsubmit.co/info@znsoarchitects.com"
+                        method="POST"
+                        encType="multipart/form-data"
+                        className="space-y-8"
+                    >
+                        {/* FormSubmit Configuration */}
+                        <input type="hidden" name="_subject" value={getEmailSubject()} />
+                        <input type="hidden" name="_next" value="https://znsoarchitects.com/contact?submitted=true" />
+                        <input type="hidden" name="_captcha" value="false" />
+                        <input type="hidden" name="_template" value="table" />
+
+                        {/* Hidden fields for button selections */}
+                        <input type="hidden" name="Department" value={department || ''} />
+                        <input type="hidden" name="Project Type" value={projectType || ''} />
+                        <input type="hidden" name="Project Status" value={residentialStatus || ''} />
+                        <input type="hidden" name="Work Type" value={existingType || ''} />
+                        <input type="hidden" name="Plot Size" value={plotSize} />
+                        <input type="hidden" name="Has Technical Design" value={hasTechnicalDesign || ''} />
+
+                        {/* Department Selection */}
+                        <div className="space-y-4">
+                            <label className="text-xs uppercase tracking-widest text-white/60">Select Department</label>
+                            <div className="grid grid-cols-2 gap-4">
+                                <button
+                                    type="button"
+                                    onClick={() => handleDepartmentChange('architectural')}
+                                    className={cn(
+                                        'p-6 rounded-2xl border transition-all duration-300 text-left',
+                                        department === 'architectural'
+                                            ? 'bg-white/15 border-white/40 shadow-lg'
+                                            : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                    )}
+                                >
+                                    <div className="text-lg font-light mb-1">Architectural</div>
+                                    <div className="text-xs text-white/50">Buildings & Structures</div>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDepartmentChange('interior')}
+                                    className={cn(
+                                        'p-6 rounded-2xl border transition-all duration-300 text-left',
+                                        department === 'interior'
+                                            ? 'bg-white/15 border-white/40 shadow-lg'
+                                            : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                    )}
+                                >
+                                    <div className="text-lg font-light mb-1">Interior Design</div>
+                                    <div className="text-xs text-white/50">Spaces & Interiors</div>
+                                </button>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-widest text-white/60">Last Name</label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
-                                />
-                            </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-widest text-white/60">Email Address</label>
-                                <input
-                                    type="email"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-widest text-white/60">Phone Number</label>
-                                <input
-                                    type="tel"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
-                                />
-                            </div>
-                        </div>
+                        <AnimatePresence mode="wait">
+                            {department && (
+                                <motion.div
+                                    key={department}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="space-y-6"
+                                >
+                                    {/* Basic Info - Both Departments */}
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-xs uppercase tracking-widest text-white/60">First Name</label>
+                                            <input
+                                                type="text"
+                                                name="First Name"
+                                                required
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs uppercase tracking-widest text-white/60">Family Name</label>
+                                            <input
+                                                type="text"
+                                                name="Family Name"
+                                                required
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
+                                            />
+                                        </div>
+                                    </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-widest text-white/60">Project Location</label>
-                            <input
-                                type="text"
-                                placeholder="City, Country"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors placeholder:text-white/20"
-                            />
-                        </div>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-xs uppercase tracking-widest text-white/60">Contact Number</label>
+                                            <input
+                                                type="tel"
+                                                name="Contact Number"
+                                                required
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs uppercase tracking-widest text-white/60">Area</label>
+                                            <input
+                                                type="text"
+                                                name="Area"
+                                                placeholder="e.g., Salmiya, Kuwait City"
+                                                required
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors placeholder:text-white/20"
+                                            />
+                                        </div>
+                                    </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-widest text-white/60">Project Type</label>
-                            <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors text-white/80 [&>option]:bg-black">
-                                <option value="">Select project type</option>
-                                <option value="residential">Residential</option>
-                                <option value="commercial">Commercial</option>
-                                <option value="hospitality">Hospitality</option>
-                                <option value="cultural">Cultural</option>
-                                <option value="interior">Interior Design</option>
-                                <option value="consultation">Consultation Only</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
+                                    {/* Architectural Department Flow */}
+                                    {department === 'architectural' && (
+                                        <>
+                                            {/* Project Type Selection */}
+                                            <div className="space-y-4">
+                                                <label className="text-xs uppercase tracking-widest text-white/60">Project Type</label>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleProjectTypeChange('commercial')}
+                                                        className={cn(
+                                                            'p-4 rounded-xl border transition-all duration-300',
+                                                            projectType === 'commercial'
+                                                                ? 'bg-white/15 border-white/40'
+                                                                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                        )}
+                                                    >
+                                                        Commercial
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleProjectTypeChange('residential')}
+                                                        className={cn(
+                                                            'p-4 rounded-xl border transition-all duration-300',
+                                                            projectType === 'residential'
+                                                                ? 'bg-white/15 border-white/40'
+                                                                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                        )}
+                                                    >
+                                                        Residential
+                                                    </button>
+                                                </div>
+                                            </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-widest text-white/60">Project Details</label>
-                            <textarea
-                                rows={4}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors resize-none"
-                            />
-                        </div>
+                                            {/* Residential Status */}
+                                            <AnimatePresence mode="wait">
+                                                {projectType === 'residential' && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-4 overflow-hidden"
+                                                    >
+                                                        <label className="text-xs uppercase tracking-widest text-white/60">Project Status</label>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleResidentialStatusChange('existing')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    residentialStatus === 'existing'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                Existing
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleResidentialStatusChange('new')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    residentialStatus === 'new'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                New
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
 
-                        <Button className="w-full md:w-auto mt-4">Submit Request</Button>
+                                            {/* Existing Property Type (Demolishment/Refurbishment) */}
+                                            <AnimatePresence mode="wait">
+                                                {residentialStatus === 'existing' && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-4 overflow-hidden"
+                                                    >
+                                                        <label className="text-xs uppercase tracking-widest text-white/60">Work Type</label>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setExistingType('demolishment')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    existingType === 'demolishment'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                Demolishment
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setExistingType('refurbishment')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    existingType === 'refurbishment'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                Refurbishment
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+
+                                            {/* Plot Size - Shows for Commercial, or Residential with status selected */}
+                                            <AnimatePresence mode="wait">
+                                                {(projectType === 'commercial' ||
+                                                  (projectType === 'residential' && residentialStatus === 'new') ||
+                                                  (projectType === 'residential' && residentialStatus === 'existing' && existingType)) && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-4 overflow-hidden"
+                                                    >
+                                                        <label className="text-xs uppercase tracking-widest text-white/60">Plot Size</label>
+                                                        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                                                            {plotSizes.map((size) => (
+                                                                <button
+                                                                    key={size}
+                                                                    type="button"
+                                                                    onClick={() => setPlotSize(size)}
+                                                                    className={cn(
+                                                                        'p-3 rounded-xl border transition-all duration-300 text-sm',
+                                                                        plotSize === size
+                                                                            ? 'bg-white/15 border-white/40'
+                                                                            : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                    )}
+                                                                >
+                                                                    {size}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+
+                                            {/* Submit Button for Architectural */}
+                                            <AnimatePresence mode="wait">
+                                                {(projectType === 'commercial' ||
+                                                  (projectType === 'residential' && residentialStatus === 'new') ||
+                                                  (projectType === 'residential' && residentialStatus === 'existing' && existingType)) && plotSize && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                    >
+                                                        <Button type="submit" className="w-full md:w-auto mt-4">Submit Request</Button>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </>
+                                    )}
+
+                                    {/* Interior Design Department Flow */}
+                                    {department === 'interior' && (
+                                        <>
+                                            {/* Project Type Selection */}
+                                            <div className="space-y-4">
+                                                <label className="text-xs uppercase tracking-widest text-white/60">Project Type</label>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleProjectTypeChange('commercial')}
+                                                        className={cn(
+                                                            'p-4 rounded-xl border transition-all duration-300',
+                                                            projectType === 'commercial'
+                                                                ? 'bg-white/15 border-white/40'
+                                                                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                        )}
+                                                    >
+                                                        Commercial
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleProjectTypeChange('residential')}
+                                                        className={cn(
+                                                            'p-4 rounded-xl border transition-all duration-300',
+                                                            projectType === 'residential'
+                                                                ? 'bg-white/15 border-white/40'
+                                                                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                        )}
+                                                    >
+                                                        Residential
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Residential Status for Interior */}
+                                            <AnimatePresence mode="wait">
+                                                {projectType === 'residential' && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-4 overflow-hidden"
+                                                    >
+                                                        <label className="text-xs uppercase tracking-widest text-white/60">Project Status</label>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleResidentialStatusChange('existing')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    residentialStatus === 'existing'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                Existing
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleResidentialStatusChange('new')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    residentialStatus === 'new'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                New
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+
+                                            {/* Technical Architecture Design Question */}
+                                            <AnimatePresence mode="wait">
+                                                {(projectType === 'commercial' || (projectType === 'residential' && residentialStatus)) && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-4 overflow-hidden"
+                                                    >
+                                                        <label className="text-xs uppercase tracking-widest text-white/60">
+                                                            Do you have technical architecture design ready?
+                                                        </label>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTechnicalDesignChange('yes')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    hasTechnicalDesign === 'yes'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                Yes
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleTechnicalDesignChange('no')}
+                                                                className={cn(
+                                                                    'p-4 rounded-xl border transition-all duration-300',
+                                                                    hasTechnicalDesign === 'no'
+                                                                        ? 'bg-white/15 border-white/40'
+                                                                        : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                                                                )}
+                                                            >
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+
+                                            {/* PDF Upload */}
+                                            <AnimatePresence mode="wait">
+                                                {hasTechnicalDesign === 'yes' && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-4 overflow-hidden"
+                                                    >
+                                                        <label className="text-xs uppercase tracking-widest text-white/60">
+                                                            Upload Technical Design (PDF)
+                                                        </label>
+
+                                                        {!uploadedFile ? (
+                                                            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-2xl cursor-pointer hover:border-white/40 hover:bg-white/5 transition-all duration-300">
+                                                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                                    <Upload className="w-8 h-8 mb-2 text-white/40" />
+                                                                    <p className="text-sm text-white/60">
+                                                                        <span className="font-medium text-white/80">Click to upload</span> or drag and drop
+                                                                    </p>
+                                                                    <p className="text-xs text-white/40 mt-1">PDF files only</p>
+                                                                </div>
+                                                                <input
+                                                                    type="file"
+                                                                    name="Technical Design PDF"
+                                                                    accept=".pdf,application/pdf"
+                                                                    onChange={handleFileChange}
+                                                                    className="hidden"
+                                                                />
+                                                            </label>
+                                                        ) : (
+                                                            <div className="flex items-center gap-4 p-4 bg-white/5 border border-white/20 rounded-2xl">
+                                                                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                                                    <FileText className="w-6 h-6 text-white/70" />
+                                                                </div>
+                                                                <div className="flex-1 min-w-0">
+                                                                    <p className="text-sm font-medium truncate">{uploadedFile.name}</p>
+                                                                    <p className="text-xs text-white/50">
+                                                                        {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
+                                                                    </p>
+                                                                </div>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={removeFile}
+                                                                    className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                                                                >
+                                                                    <X className="w-5 h-5 text-white/60" />
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+
+                                            {/* Submit Button for Interior - shows when No is selected OR when file is uploaded */}
+                                            <AnimatePresence mode="wait">
+                                                {(hasTechnicalDesign === 'no' || (hasTechnicalDesign === 'yes' && uploadedFile)) && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                    >
+                                                        <Button type="submit" className="w-full md:w-auto mt-4">Submit Request</Button>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </>
+                                    )}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </form>
                 </motion.div>
 
