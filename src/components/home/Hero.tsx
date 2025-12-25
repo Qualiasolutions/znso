@@ -33,8 +33,8 @@ const imageSets = [
     {
         background: '/projects/osama/Living_1.jpg',
         main: { src: '/projects/osama/Living_2.jpg', label: 'Osama Residence' },
-        accent1: '/projects/osama/Dining_1.jpg',
-        accent2: '/projects/osama/Bedroom_1.jpg',
+        accent1: '/projects/osama/Pool_1.jpg',
+        accent2: '/projects/osama/Bedroom_2.jpg',
     },
     {
         background: '/projects/facade-3/Facade-2_1.jpg',
@@ -43,10 +43,10 @@ const imageSets = [
         accent2: '/projects/facade-3/Facade-2_4.jpg',
     },
     {
-        background: '/projects/hassan-at/Living_1.jpg',
+        background: '/projects/hassan-at/Reception_1.jpg',
         main: { src: '/projects/hassan-at/Dining_1.jpg', label: 'Hassan Residence' },
-        accent1: '/projects/hassan-at/Master_1.jpg',
-        accent2: '/projects/hassan-at/Living_2.jpg',
+        accent1: '/projects/hassan-at/Reception_3.jpg',
+        accent2: '/projects/hassan-at/Reception_2.jpg',
     },
 ];
 
