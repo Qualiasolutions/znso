@@ -82,9 +82,10 @@ export function FeaturedProjects({ onSelectProject }: FeaturedProjectsProps) {
                         <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden border border-white/10 mb-6">
                             <Image
                                 src={project.coverImage}
-                                alt={project.title}
+                                alt={`${project.title} - ${project.location}`}
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                sizes="(max-width: 768px) 400px, 500px"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
 

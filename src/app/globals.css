@@ -1,14 +1,46 @@
 @import "tailwindcss";
 
 :root {
+  /* Core palette - unified dark theme */
   --background: #050505;
+  --background-elevated: #0a0a0a;
+  --background-muted: #111111;
+  --background-subtle: #161616;
   --foreground: #f0f0f0;
+
+  /* Accent - warm gold for CTAs */
+  --accent: #c9a962;
+  --accent-hover: #d4b978;
+  --accent-muted: rgba(201, 169, 98, 0.15);
+
+  /* Text hierarchy */
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.70);
+  --text-muted: rgba(255, 255, 255, 0.50);
+  --text-subtle: rgba(255, 255, 255, 0.35);
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.20);
+
+  /* Animation timings */
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.6s;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-background-muted: var(--background-muted);
+  --color-background-subtle: var(--background-subtle);
   --color-foreground: var(--foreground);
-  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --font-sans: 'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* Base Styles */
@@ -46,7 +78,19 @@ html {
 
 /* Selection color */
 ::selection {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(201, 169, 98, 0.3);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Focus styles */

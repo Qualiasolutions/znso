@@ -111,9 +111,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: 0.3 }}
                                         onClick={onClose}
-                                        className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors flex-shrink-0 ml-4"
+                                        aria-label="Close project gallery"
+                                        className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors flex-shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a962]/50"
                                     >
-                                        <X className="w-4 h-4 md:w-5 md:h-5" />
+                                        <X className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
                                     </motion.button>
                                 </div>
 
@@ -163,21 +164,23 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     {/* Left Arrow */}
                                     <button
                                         onClick={() => scrollTo('left')}
-                                        className={`absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-all duration-300 ${
+                                        aria-label="View previous images"
+                                        className={`absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a962]/50 rounded-lg ${
                                             canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                         }`}
                                     >
-                                        <ChevronLeft className="w-10 h-14 md:w-14 md:h-20 border border-white/[0.08] rounded-lg p-1" strokeWidth={1} />
+                                        <ChevronLeft className="w-10 h-14 md:w-14 md:h-20 border border-white/[0.08] rounded-lg p-1" strokeWidth={1} aria-hidden="true" />
                                     </button>
 
                                     {/* Right Arrow */}
                                     <button
                                         onClick={() => scrollTo('right')}
-                                        className={`absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-all duration-300 ${
+                                        aria-label="View more images"
+                                        className={`absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a962]/50 rounded-lg ${
                                             canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                         }`}
                                     >
-                                        <ChevronRight className="w-10 h-14 md:w-14 md:h-20 border border-white/[0.08] rounded-lg p-1" strokeWidth={1} />
+                                        <ChevronRight className="w-10 h-14 md:w-14 md:h-20 border border-white/[0.08] rounded-lg p-1" strokeWidth={1} aria-hidden="true" />
                                     </button>
 
                                     {/* Scrollable Gallery */}

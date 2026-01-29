@@ -32,7 +32,7 @@ export function Navbar() {
                         <Link href="/" className="relative z-50">
                             <Image
                                 src="/main.png"
-                                alt="ZNSO"
+                                alt="ZNSO Architects - Luxury architectural design in Kuwait"
                                 width={48}
                                 height={48}
                                 className="h-10 w-auto md:h-12"
@@ -69,8 +69,10 @@ export function Navbar() {
                         {/* Mobile Menu Button */}
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center"
-                            aria-label="Toggle menu"
+                            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a962]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-lg"
+                            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                            aria-expanded={isOpen}
+                            aria-controls="mobile-menu"
                         >
                             <div className="w-6 flex flex-col gap-1.5">
                                 <motion.span
@@ -98,6 +100,10 @@ export function Navbar() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id="mobile-menu"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Navigation menu"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}

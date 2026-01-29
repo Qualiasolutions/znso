@@ -78,10 +78,11 @@ export function Hero({ onOpenModal }: HeroProps) {
                 >
                     <Image
                         src={currentSet.background}
-                        alt="ZNSO Architecture"
+                        alt="ZNSO Architecture - Luxury architectural design in Kuwait"
                         fill
                         className="object-cover"
                         priority
+                        sizes="100vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/50" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
@@ -232,9 +233,10 @@ export function Hero({ onOpenModal }: HeroProps) {
                                 >
                                     <Image
                                         src={currentSet.main.src}
-                                        alt={currentSet.main.label}
+                                        alt={`${currentSet.main.label} - Featured project by ZNSO Architects`}
                                         fill
                                         className="object-cover"
+                                        sizes="(max-width: 1024px) 0vw, 400px"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                                 </motion.div>
@@ -270,9 +272,10 @@ export function Hero({ onOpenModal }: HeroProps) {
                                 >
                                     <Image
                                         src={currentSet.accent1}
-                                        alt="Project detail"
+                                        alt="Architectural detail"
                                         fill
                                         className="object-cover"
+                                        sizes="80px"
                                     />
                                     <div className="absolute inset-0 bg-black/20" />
                                 </motion.div>
@@ -292,9 +295,10 @@ export function Hero({ onOpenModal }: HeroProps) {
                                 >
                                     <Image
                                         src={currentSet.accent2}
-                                        alt="Project detail"
+                                        alt="Interior detail"
                                         fill
                                         className="object-cover"
+                                        sizes="64px"
                                     />
                                     <div className="absolute inset-0 bg-black/20" />
                                 </motion.div>

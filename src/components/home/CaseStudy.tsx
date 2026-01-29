@@ -23,9 +23,10 @@ export function CaseStudy() {
             <motion.div style={{ y }} className="absolute inset-0 z-0">
                 <Image
                     src="/projects/facade-1/1.jpg"
-                    alt="Maison Blanche"
+                    alt="Maison Blanche villa - ZNSO Architects featured case study"
                     fill
                     className="object-cover"
+                    sizes="100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-black/60" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
@@ -108,9 +109,10 @@ export function CaseStudy() {
                         >
                             <Image
                                 src="/projects/facade-1/5.jpg"
-                                alt="Maison Blanche Facade"
+                                alt="Maison Blanche Facade - Night view architectural render"
                                 fill
                                 className="object-cover"
+                                sizes="(max-width: 1024px) 100vw, 50vw"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
@@ -130,9 +132,10 @@ export function CaseStudy() {
                         >
                             <Image
                                 src="/projects/facade-1/3.jpg"
-                                alt="Maison Blanche Detail"
+                                alt="Maison Blanche architectural detail"
                                 fill
                                 className="object-cover"
+                                sizes="128px"
                             />
                         </motion.div>
 
